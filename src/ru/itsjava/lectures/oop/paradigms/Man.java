@@ -33,4 +33,13 @@ public class Man {
     public int hashCode() {
         return Objects.hash(name, age, height, weight, telephone);
     }
+
+    @Override
+    public String toString() {
+        return "name= " + name  +
+                ", age=" + age +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", telephone='" + telephone  +"\n";
+    }
 }
