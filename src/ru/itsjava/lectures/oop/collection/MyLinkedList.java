@@ -4,12 +4,12 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class MyLinkedList <T> {
-    private Node  head;
-    private Node  end;
+public class MyLinkedList<T> {
+    private Node<T> head;
+    private Node<T> end;
     private int size;
 
-    public MyLinkedList(Node head, Node end, int size) {
+    public MyLinkedList(Node<T> head, Node<T> end, int size) {
         this.head = head;
         this.end = end;
         this.size = size;
@@ -30,23 +30,23 @@ public class MyLinkedList <T> {
         return false;
     }
 
-    public boolean add(Object o) {
+    public boolean add(T t) {
         if (isEmpty()) {
-            head = new Node(o, null);
+            head = new Node(t, null, null);
             return true;
         }
         Node node = head;
         while (node.getNext() != null) {
             node = node.getNext();
         }
-        node.setNext(new Node(o, null));
+        node.setNext(new Node(t, null,null));
         return true;
     }
 
-    public boolean remove(Object o) {
+    public boolean remove(T t) {
         Node curNode = head;
         Node prev = null;
-        while (!curNode.getValue().equals(o)) {
+        while (!curNode.getValue().equals(t)) {
             prev = curNode;
             curNode = curNode.getNext();
         }
@@ -60,12 +60,14 @@ public class MyLinkedList <T> {
     }
 
     public void clear() {
-
+        head = end;
+        end = null;
+        size = 0;
     }
 
-    public Node get(int index) {
+    public Node<T> get(int index) {
         Node node = head;
-        if (index < 0 || index > size - 1) {
+        if (index < 0) {
             System.err.println("Не верный индекс");
         }
         for (int i = 0; i < index; i++) {
@@ -74,24 +76,75 @@ public class MyLinkedList <T> {
         return node;
     }
 
-    public Object set(int index, Object element) {
-        return null;
+    public Node<T> set(int index, T element) {
+        Node<T> node = head;
+        for (int i = 0; i < index; i++) {
+            node = node.getNext();
+        }
+        node.setValue(element);
+        return node;
     }
 
-    public void add(int index, Object element) {
+    public void add(int index, T element) {
+        Node<T> curNode = head;
+        for (int i = 0; i < index; i++) {
+            curNode = curNode.getNext();
 
+        }
+        Node<T> prevNode = curNode.getHead();
+        Node<T> nodeAdd = new Node<T>(element, curNode, prevNode);
+        curNode.setHead(nodeAdd);
+        if (prevNode == null) {
+            head = nodeAdd;
+        } else {
+            prevNode.setNext(nodeAdd);
+        }
+        size++;
     }
 
-    public Object remove(int index) {
-        return null;
+    public Node<T> remove(int index) {
+        Node<T> curNode = get(index);
+        Node<T> nextNode = curNode.getNext();
+        Node<T> prevNode = curNode.getHead();
+        if (nextNode != null) {
+            nextNode.setHead(prevNode);
+            if (prevNode == null) {
+                head = nextNode;
+            }
+        }
+        if (prevNode != null) {
+            prevNode.setNext(nextNode);
+            if (nextNode == null) {
+                end = prevNode;
+            }
+        }
+        size--;
+        if (size == 0) {
+            head = end = null;
+        }
+        return curNode;
     }
 
-    public int indexOf(Object o) {
-        return 0;
+    public int indexOf(T t) {
+        Node<T> node = head;
+        for (int i = 0; i < size; i++) {
+            if (node.getValue().equals(t)) {
+                return i;
+            }
+            node = node.getNext();
+        }
+        return -1;
     }
 
-    public int lastIndexOf(Object o) {
-        return 0;
+    public int lastIndexOf(T t) {
+        Node<T> node = end;
+        for (int i = size - 1; i > 0; i--) {
+            if (node.getValue().equals(t)) {
+                return i;
+            }
+            node = node.getHead();
+        }
+        return -1;
     }
 
     public List subList(int fromIndex, int toIndex) {
