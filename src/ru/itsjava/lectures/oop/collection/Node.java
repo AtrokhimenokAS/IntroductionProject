@@ -1,29 +1,38 @@
 package ru.itsjava.lectures.oop.collection;
 
-public class Node {
-    private Object value;
-    private Node next;
-    private Node head;
+public class Node<T> {
+    private T value;
+    private Node<T> next;
+    private Node<T> head;
 
-    public Node(Object value, Node next) {
+    public Node(T value, Node<T> next, Node<T> head) {
         this.value = value;
         this.next = next;
+        this.head = head;
     }
 
-    public Object getValue() {
+    public T getValue() {
         return value;
     }
 
-    public void setValue(Object value) {
+    public void setValue(T value) {
         this.value = value;
     }
 
-    public Node getNext() {
+    public Node<T> getNext() {
         return next;
     }
 
-    public void setNext(Node next) {
+    public void setNext(Node<T> next) {
         this.next = next;
+    }
+
+    public Node<T> getHead() {
+        return head;
+    }
+
+    public void setHead(Node<T> head) {
+        this.head = head;
     }
 
     @Override
