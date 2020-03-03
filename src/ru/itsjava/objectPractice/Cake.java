@@ -21,9 +21,9 @@ public class Cake {
         this.weight = weight;
     }
 
-    @Override
+   @Override
     public String toString() {
-        return "Название: "+name +" Вес: "+weight+" кг";
+        return name +" "+weight;
     }
 
     public void setName(String name) {
