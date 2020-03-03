@@ -1,4 +1,4 @@
-package ru.itsjava.objectPractice;
+package ru.itsjava.iostreams;
 
 public class User {
     private String login;
