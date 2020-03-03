@@ -1,6 +1,8 @@
 package ru.itsjava.lectures.oop;
 
-public class Dog {
+import java.io.Serializable;
+
+public class Dog implements Serializable {
     private String name;
     private String breed;
     private boolean isBark;
